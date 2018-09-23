@@ -1,0 +1,10 @@
+{
+  "dev": {
+    "driver": "mysql",
+    "host": "db4free.net",
+    "user": "meteor",
+    "password": "password",
+    "database": "meteor"
+  },
+  "sql-file": true
+}
