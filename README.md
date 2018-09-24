@@ -16,3 +16,6 @@
 
 ## Author
 Faris Rayhan <frayhan94@gmail.com>
+
+## Sample of sequelize
+https://github.com/sequelize/express-example/blob/master/models/index.js
