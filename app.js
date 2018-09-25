@@ -1,24 +1,19 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var routes = require("./routes/routes.js");
-var app = express();
-var mysql = require("mysql");
-
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(function(req, res, next){
-    res.locals.connection = mysql.createConnection({
-        host     : 'db4free.net',
-        user     : 'meteor',
-        password : 'password',
-        database : 'meteor'
-    });
-    res.locals.connection.connect();
-    next();
+const db = require('./config/db.js');
+db.sequelize.sync({force: true}).then(() => {
+    console.log('Drop and Resync with { force: true }');
 });
 
-routes(app);
+require('./routes/users')(app);
+require('./routes/category')(app);
+require('./routes/product')(app);
 
-var server = app.listen(3000, function () {
-    console.log("app running on port.", server.address().port);
+const server = app.listen(3000, function () {
+    const host = server.address().address;
+    const port = server.address().port;
+    console.log("App listening at http://%s:%s", host, port)
 });
